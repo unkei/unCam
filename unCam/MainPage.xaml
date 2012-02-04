@@ -1,0 +1,90 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="unCam.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="728" d:DesignHeight="480"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Landscape" Orientation="LandscapeLeft"
+    shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.Resources>
+		<Storyboard x:Name="GuidelineIn">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.5"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Name="GuidelineOut">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="path">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent" HorizontalAlignment="Left">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="640"/>
+            <ColumnDefinition Width="128"/>
+        </Grid.ColumnDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <!--<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />-->
+        <!--</StackPanel>-->
+
+        <!--ContentPanel - place additional content here-->
+        <Canvas Grid.Column="0" Name="viewfinderCanvas" Width="640" Height="480" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Canvas.Background>
+                <VideoBrush x:Name="viewfinderBrush">
+                    <VideoBrush.RelativeTransform>
+                        <CompositeTransform CenterX="0.5" CenterY="0.5" Rotation="0" />
+                    </VideoBrush.RelativeTransform>
+                </VideoBrush>
+            </Canvas.Background>
+            <!-- Brackets for Touch Focus -->
+            <TextBlock 
+                x:Name="focusBrackets" 
+                Text="[   ]" 
+                FontSize="40"
+                Visibility="Collapsed"/>
+        </Canvas>
+        <Image Grid.Row="0" Name="lastView" Visibility="Collapsed" Width="640" Height="480" Margin="0,0,0,0"/>
+        <Canvas HorizontalAlignment="Stretch" Margin="0,0,0,0" Name="canvas1" VerticalAlignment="Stretch">
+            <Path x:Name="path" Data="M 222,192 A 30,37 360 1 1 418,192 A 30,37 360 1 1 222,192" Stroke="Blue" StrokeThickness="15" Opacity="0.5"/>
+        </Canvas>
+        <StackPanel Grid.Column="1" Width="72" Height="480" Orientation="Vertical" HorizontalAlignment="Center" Margin="0,1,0,0" Name="stackPanel1" VerticalAlignment="Top" Visibility="Collapsed">
+            <Button Content="Res" Height="70" HorizontalAlignment="Right" Name="ResButton" VerticalAlignment="Top" Width="70" Margin="0,0,0,0" Padding="3" Click="changeRes_Clicked" />
+            <Button Content="SH" Height="70" HorizontalAlignment="Right" Name="ShutterButton" VerticalAlignment="Top" Width="70" Margin="0,0,0,0" Padding="3" Click="shutterButton_Click" />
+            <Button Height="70" Name="galleryButton" Width="70" Margin="0,0,0,0" Padding="3" Click="galleryButton_Click">
+                <Button.Content>
+                    <Image Height="70" Name="image1" Stretch="UniformToFill" Width="70" ManipulationStarted="galleryButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button.Content>
+            </Button>
+            <Button Content="AF" Height="70" HorizontalAlignment="Right" Name="AFButton" VerticalAlignment="Top" Width="70" Margin="0,0,0,0" Padding="3" Click="focus_Clicked" />
+            <Button Content="Fl" Height="70" HorizontalAlignment="Right" Name="FlashButton" VerticalAlignment="Top" Width="70" Margin="0,0,0,0" Padding="3" Click="changeFlash_Clicked" />
+        </StackPanel>
+        <!--Used for debugging >-->
+        <TextBlock Visibility="Collapsed" Height="40" HorizontalAlignment="Left" Margin="8,428,0,0" Name="txtDebug" VerticalAlignment="Top" Width="626" FontSize="24" FontWeight="ExtraBold" />
+    </Grid>
+ 
+    <!--Sample code showing usage of ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Default" Opacity="0.8">
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.feature.camera.rest.png" Text="撮影" Click="OnButtonFullPress"/>
+            <!--<shell:ApplicationBarIconButton IconUri="/icons/appbar.check.rest.png" Text="OK"/>-->
+            <!--<shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>-->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
